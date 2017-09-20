@@ -1,12 +1,14 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, TouchableOpacity } from 'react-native';
 
 export default function Deck(props) {
   return (
-    <View style={styles.containerStyle}>
-      <Text style={styles.titleStyle}>Deck</Text>
-      <Text style={styles.cardNumberDesc}>3 cards</Text>
-    </View>
+    <TouchableOpacity>
+      <View style={styles.containerStyle}>
+        <Text style={styles.titleStyle}>{props.title}</Text>
+        <Text style={styles.cardNumberDesc}>{`${props.cardNumber} card(s)`}</Text>
+      </View>
+    </TouchableOpacity>
   )
 };
 
@@ -14,7 +16,10 @@ const styles = {
   containerStyle: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: '#0FF',
+    marginBottom: 20,
+    height: 150
   },
   titleStyle: {
     fontSize: 30

@@ -1,9 +1,16 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, StatusBar } from 'react-native';
+import { 
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  StatusBar
+} from 'react-native';
 import { Constants } from 'expo';
 import { TabNavigator } from 'react-navigation';
 
-import Deck from './components/Deck';
+import DeckList from './components/DeckList';
+import NewDeck from './components/NewDeck';
 
 function CardStatusBar ({ backgroundColor, ...props }) {
   return (
@@ -16,8 +23,17 @@ function CardStatusBar ({ backgroundColor, ...props }) {
 export default class App extends React.Component {
   render() {
     const Tabs = TabNavigator({
-      Deck: {
-        screen: Deck
+      DeckList: {
+        screen: DeckList,
+        navigationOptions: {
+          tabBarLabel: 'Deck List'
+        }
+      },
+      NewDeck: {
+        screen: NewDeck,
+        navigationOptions: {
+          tabBarLabel: 'New Deck'
+        }
       }
     });
 
