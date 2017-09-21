@@ -29,7 +29,7 @@ export default class DeckView extends Component {
       <View style={container}>
         <MaterialCommunityIcons name='cards' size={300} color='#1485ff' />
         <Text style={headerText}>{title}</Text>
-        <Text style={detailText}>{questions ? `${questions.length} Question(s)` : '0 Questions'}</Text>
+        <Text style={detailText}>{questions ? `${questions.length} Card(s)` : '0 Card'}</Text>
 
         <TouchableOpacity
           onPress={() => this.props.navigation.navigate(
