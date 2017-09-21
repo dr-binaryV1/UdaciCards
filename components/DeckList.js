@@ -1,10 +1,22 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet, FlatList } from 'react-native';
+import { getDecks } from '../utils/helpers';
 
 import Deck from './Deck';
 
 export default class DeckList extends Component {
+  state = {
+    decks: {}
+  }
+
+  componentDidMount() {
+    getDecks().then(result => this.setState({ decks: result }));
+  }
+
   render() {
+    const{ decks } = this.state;
+    console.log(decks);
+
     const data = [
       {
         title: 'React',
