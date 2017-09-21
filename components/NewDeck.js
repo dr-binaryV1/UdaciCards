@@ -61,12 +61,14 @@ const styles = StyleSheet.create({
   buttonStyle: {
     padding: 10,
     width: 100,
-    backgroundColor: '#1485ff',
+    backgroundColor: '#FFF',
+    borderWidth: 1,
+    borderColor: '#1485ff',
     marginTop: 5,
     borderRadius: 3
   },
   buttonText: {
-    color: '#FFF',
+    color: '#1485ff',
     fontSize: 20,
     textAlign: 'center'
   }
