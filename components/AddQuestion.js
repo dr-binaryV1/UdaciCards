@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Text, KeyboardAvoidingView, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
+import { addCardToDeck } from '../utils/helpers';
+
 export default class AddQuestion extends Component {
   state = {
     question: '',
@@ -10,6 +12,7 @@ export default class AddQuestion extends Component {
 
   render() {
     const { container, inputStyle, addCardButton } = styles;
+    const { title } = this.props.navigation.state.params;
 
     return (
       <KeyboardAvoidingView behavior='padding' style={container}>
@@ -29,7 +32,9 @@ export default class AddQuestion extends Component {
           value={this.state.answer}
         />
 
-        <TouchableOpacity style={addCardButton}>
+        <TouchableOpacity
+          onPress={() => addCardToDeck(title, {question: this.state.question, answer: this.state.answer})}
+          style={addCardButton}>
           <Text style={{ fontSize: 20, color: '#FFF' }}>Submit Card</Text>
         </TouchableOpacity>
       </KeyboardAvoidingView>
