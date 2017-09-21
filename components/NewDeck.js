@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, TextInput,KeyboardAvoidingView, Button } from 'react-native';
+import { Text, View, TextInput,KeyboardAvoidingView, Button, StyleSheet } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 export default class NewDeck extends Component {
@@ -32,7 +32,7 @@ export default class NewDeck extends Component {
   }
 }
 
-const styles = {
+const styles = StyleSheet.create({
   containerStyle: {
     flex: 1,
     justifyContent: 'center',
@@ -53,4 +53,4 @@ const styles = {
     padding: 10,
     width: 100
   }
-}
+});
