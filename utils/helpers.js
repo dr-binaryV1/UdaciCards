@@ -7,8 +7,12 @@ export function getDecks() {
   })
 }
 
-export function getDeck(id) {
-
+export function getDeck(title) {
+  return AsyncStorage.getItem(CARD_STORAGE_KEY)
+    .then(result => {
+      const data = JSON.parse(result);
+      return data[title];
+    })
 }
 
 export function saveDeckTitle(title) {

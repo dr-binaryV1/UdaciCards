@@ -30,6 +30,7 @@ export default class NewDeck extends Component {
         <Text style={headingText}>What is the title of your new deck?</Text>
         <TextInput
           style={inputStyle}
+          placeholder='Enter Deck Title'
           onChangeText={(text) => this.setState({ deckTitle: text })}
           value={this.state.deckTitle}
         />
@@ -63,14 +64,14 @@ const styles = StyleSheet.create({
   buttonStyle: {
     padding: 10,
     width: 100,
-    backgroundColor: '#FFF',
+    backgroundColor: '#1485ff',
     borderWidth: 1,
     borderColor: '#1485ff',
     marginTop: 5,
     borderRadius: 3
   },
   buttonText: {
-    color: '#1485ff',
+    color: '#FFF',
     fontSize: 20,
     textAlign: 'center'
   }
