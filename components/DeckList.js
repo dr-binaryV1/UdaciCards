@@ -6,15 +6,26 @@ import Deck from './Deck';
 
 export default class DeckList extends Component {
   state = {
-    decks: {}
+    decks: undefined
   }
 
   componentDidMount() {
     getDecks().then(result => this.setState({ decks: result }));
   }
 
+  onNavigate(title) {
+    
+  }
+
   render() {
-    const{ decks } = this.state;
+    let decks = '';
+    let decksData = '';
+    if(this.state.decks) { 
+      decks = JSON.parse(this.state.decks);
+      decksData = Object.keys(decks).map((key) => {
+        return decks[key];
+      });
+    }
 
     const data = [
       {
@@ -29,11 +40,12 @@ export default class DeckList extends Component {
 
     return (
       <View style={styles.container}>
-        <FlatList
-          data={data}
-          renderItem={({item}) => <Deck title={item.title} cardNumber={item.cardNumber} />}
-          keyExtractor={(item, index) => index}
-        />
+        {decksData ?
+          <FlatList
+            data={decksData}
+            renderItem={({item}) => <Deck navigation={this.props.navigation} title={item.title} cardNumber={0} />}
+            keyExtractor={(item, index) => index}
+          /> : <Text>''</Text>}
       </View>
     )
   }
