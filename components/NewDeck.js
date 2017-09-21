@@ -2,13 +2,16 @@ import React, { Component } from 'react';
 import { Text, View, TextInput,KeyboardAvoidingView, TouchableOpacity, StyleSheet } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
+import { saveDeckTitle } from '../utils/helpers';
+
 export default class NewDeck extends Component {
   state = {
     deckTitle: ''
   }
 
   onSubmit() {
-
+    console.log('pressed');
+    saveDeckTitle(this.state.deckTitle);
   }
 
   render() {
@@ -33,7 +36,7 @@ export default class NewDeck extends Component {
         />
         <TouchableOpacity
           style={buttonStyle}
-          onPress={this.onSubmit}>
+          onPress={this.onSubmit.bind(this)}>
           <Text style={buttonText}>Submit</Text>
         </TouchableOpacity>
       </KeyboardAvoidingView>
