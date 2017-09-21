@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, TouchableOpacity } from 'react-native';
+import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
 
 export default function Deck(props) {
   return (
@@ -12,12 +12,14 @@ export default function Deck(props) {
   )
 };
 
-const styles = {
+const styles = StyleSheet.create({
   containerStyle: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#0FF',
+    borderColor: '#CCC',
+    borderWidth: 1,
+    borderRadius: 5,
     marginBottom: 20,
     height: 150
   },
@@ -28,4 +30,4 @@ const styles = {
     fontSize: 20,
     color: '#BBB'
   }
-}
+});
