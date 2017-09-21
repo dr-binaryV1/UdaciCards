@@ -17,7 +17,7 @@ export default class DeckList extends Component {
     ]
 
     return (
-      <View>
+      <View style={styles.container}>
         <FlatList
           data={data}
           renderItem={({item}) => <Deck title={item.title} cardNumber={item.cardNumber} />}
@@ -27,3 +27,9 @@ export default class DeckList extends Component {
     )
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    padding: 10
+  }
+});
