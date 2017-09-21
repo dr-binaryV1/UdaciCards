@@ -7,10 +7,12 @@ import {
   StatusBar
 } from 'react-native';
 import { Constants } from 'expo';
-import { TabNavigator } from 'react-navigation';
+import { TabNavigator, StackNavigator } from 'react-navigation';
 
 import DeckList from './components/DeckList';
 import NewDeck from './components/NewDeck';
+import DeckView from './components/DeckView';
+import AddQuestion from './components/AddQuestion';
 
 function CardStatusBar ({ backgroundColor, ...props }) {
   return (
@@ -37,10 +39,42 @@ export default class App extends React.Component {
       }
     });
 
+    const MainNavigator = StackNavigator({
+      Home: {
+        screen: Tabs,
+        navigationOptions: {
+          title: 'FlashCards',
+          headerTintColor: '#FFF',
+          headerStyle: {
+            backgroundColor: '#1485ff'
+          }
+        }
+      },
+      DeckView: {
+        screen: DeckView,
+        navigationOptions: {
+          headerTintColor: '#FFF',
+          headerStyle: {
+            backgroundColor: '#1485ff'
+          }
+        }
+      },
+      AddQuestion: {
+        screen: AddQuestion,
+        navigationOptions: {
+          title: 'Add Questions',
+          headerTintColor: '#FFF',
+          headerStyle: {
+            backgroundColor: '#1485ff'
+          }
+        }
+      }
+    })
+
     return (
       <View style={{flex: 1}}>
         <CardStatusBar backgroundColor={'#1485ff'} barStyle='light-content' />
-        <Tabs />
+        <MainNavigator />
       </View>
     );
   }
