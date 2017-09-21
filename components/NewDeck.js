@@ -10,7 +10,6 @@ export default class NewDeck extends Component {
   }
 
   onSubmit() {
-    console.log('pressed');
     saveDeckTitle(this.state.deckTitle);
   }
 

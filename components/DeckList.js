@@ -15,7 +15,6 @@ export default class DeckList extends Component {
 
   render() {
     const{ decks } = this.state;
-    console.log(decks);
 
     const data = [
       {
