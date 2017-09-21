@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, TextInput,KeyboardAvoidingView, Button, StyleSheet } from 'react-native';
+import { Text, View, TextInput,KeyboardAvoidingView, TouchableOpacity, StyleSheet } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 export default class NewDeck extends Component {
@@ -12,21 +12,30 @@ export default class NewDeck extends Component {
   }
 
   render() {
+    const {
+      containerStyle,
+      headingText,
+      inputStyle,
+      buttonStyle,
+      buttonText
+    } = styles;
+
     return (
       <KeyboardAvoidingView
         behavior='padding'
-        style={styles.containerStyle}>
+        style={containerStyle}>
         <MaterialCommunityIcons name='cards' size={100} color='#1485ff' />
-        <Text style={styles.headingText}>What is the title of your new deck?</Text>
+        <Text style={headingText}>What is the title of your new deck?</Text>
         <TextInput
-          style={styles.inputStyle}
+          style={inputStyle}
           onChangeText={(text) => this.setState({ deckTitle: text })}
           value={this.state.deckTitle}
         />
-        <Button
-          style={styles.buttonStyle}
-          onPress={this.onSubmit}
-          title="Submit" />
+        <TouchableOpacity
+          style={buttonStyle}
+          onPress={this.onSubmit}>
+          <Text style={buttonText}>Submit</Text>
+        </TouchableOpacity>
       </KeyboardAvoidingView>
     )
   }
@@ -51,6 +60,14 @@ const styles = StyleSheet.create({
   },
   buttonStyle: {
     padding: 10,
-    width: 100
+    width: 100,
+    backgroundColor: '#1485ff',
+    marginTop: 5,
+    borderRadius: 3
+  },
+  buttonText: {
+    color: '#FFF',
+    fontSize: 20,
+    textAlign: 'center'
   }
 });
