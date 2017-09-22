@@ -8,9 +8,10 @@ import {
 } from 'react-native';
 import { Constants } from 'expo';
 import { TabNavigator, StackNavigator } from 'react-navigation';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import reducer from './reducers';
+import ReduxThunk from 'redux-thunk';
 
 import DeckList from './components/DeckList';
 import NewDeck from './components/NewDeck';
@@ -75,7 +76,7 @@ export default class App extends React.Component {
     })
 
     return (
-      <Provider store={createStore(reducer)}>
+      <Provider store={createStore(reducer, applyMiddleware(ReduxThunk))}>
         <View style={{flex: 1}}>
           <CardStatusBar backgroundColor={'#1485ff'} barStyle='light-content' />
           <MainNavigator />
