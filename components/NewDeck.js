@@ -10,7 +10,9 @@ export default class NewDeck extends Component {
   }
 
   onSubmit() {
-    saveDeckTitle(this.state.deckTitle);
+    saveDeckTitle(this.state.deckTitle).then(() => this.props.navigation.navigate(
+      'DeckList'
+    ));
   }
 
   render() {
