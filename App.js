@@ -1,5 +1,5 @@
 import React from 'react';
-import { 
+import {
   StyleSheet,
   Text,
   View,
@@ -12,7 +12,7 @@ import { TabNavigator, StackNavigator } from 'react-navigation';
 import DeckList from './components/DeckList';
 import NewDeck from './components/NewDeck';
 import DeckView from './components/DeckView';
-import AddQuestion from './components/AddQuestion';
+import AddCard from './components/AddCard';
 
 function CardStatusBar ({ backgroundColor, ...props }) {
   return (
@@ -59,10 +59,10 @@ export default class App extends React.Component {
           }
         }
       },
-      AddQuestion: {
-        screen: AddQuestion,
+      AddCard: {
+        screen: AddCard,
         navigationOptions: {
-          title: 'Add Questions',
+          title: 'Add Card',
           headerTintColor: '#FFF',
           headerStyle: {
             backgroundColor: '#1485ff'

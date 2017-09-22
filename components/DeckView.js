@@ -33,7 +33,7 @@ export default class DeckView extends Component {
 
         <TouchableOpacity
           onPress={() => this.props.navigation.navigate(
-            'AddQuestion',
+            'AddCard',
             {title}
           )}
           style={addCardButton}>
