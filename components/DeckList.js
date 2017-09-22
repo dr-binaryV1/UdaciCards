@@ -11,29 +11,22 @@ export default class DeckList extends Component {
   }
 
   componentDidMount() {
+    this.getData();
+  }
+
+  getData() {
     getDecks().then(result => this.setState({ decks: result }));
   }
 
   render() {
     let decks = '';
     let decksData = '';
-    if(this.state.decks) { 
+    if(this.state.decks) {
       decks = JSON.parse(this.state.decks);
       decksData = Object.keys(decks).map((key) => {
         return decks[key];
       });
     }
-
-    const data = [
-      {
-        title: 'React',
-        cardNumber: 3
-      },
-      {
-        title: 'Udacity',
-        cardNumber: 1
-      }
-    ]
 
     return (
       <View style={styles.container}>
