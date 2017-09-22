@@ -1,28 +1,22 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet, FlatList } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { getDecks } from '../utils/helpers';
+//import { getDecks } from '../utils/helpers';
+import { connect } from 'react-redux';
 
 import Deck from './Deck';
+import { fetchDecks } from '../actions';
 
-export default class DeckList extends Component {
-  state = {
-    decks: undefined
-  }
-
+class DeckList extends Component {
   componentDidMount() {
-    this.getData();
-  }
-
-  getData() {
-    getDecks().then(result => this.setState({ decks: result }));
+    this.props.fetchDecks();
   }
 
   render() {
     let decks = '';
     let decksData = '';
-    if(this.state.decks) {
-      decks = JSON.parse(this.state.decks);
+    if(this.props.decks) {
+      decks = this.props.decks;
       decksData = Object.keys(decks).map((key) => {
         return decks[key];
       });
@@ -63,5 +57,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   }
-
 });
+
+function mapStateToProps(state, { navigation }) {
+  return {
+    decks: state
+  }
+}
+
+export default connect(mapStateToProps, { fetchDecks })(DeckList);

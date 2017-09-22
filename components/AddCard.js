@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { Text, KeyboardAvoidingView, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { connect } from 'react-redux';
 
-import { addCardToDeck } from '../utils/helpers';
+import { sendCardToDeck } from '../actions';
 
-export default class AddQuestion extends Component {
+class AddCard extends Component {
   state = {
     question: '',
     answer: ''
@@ -33,7 +34,7 @@ export default class AddQuestion extends Component {
         />
 
         <TouchableOpacity
-          onPress={() => addCardToDeck(title, {question: this.state.question, answer: this.state.answer})}
+          onPress={() => this.props.sendCardToDeck(title, {question: this.state.question, answer: this.state.answer})}
           style={addCardButton}>
           <Text style={{ fontSize: 20, color: '#FFF' }}>Submit Card</Text>
         </TouchableOpacity>
@@ -65,3 +66,5 @@ const styles = StyleSheet.create({
     marginTop: 30
   }
 })
+
+export default connect(null, { sendCardToDeck })(AddCard);

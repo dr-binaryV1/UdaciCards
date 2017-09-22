@@ -1,18 +1,19 @@
 import React, { Component } from 'react';
 import { Text, View, TextInput,KeyboardAvoidingView, TouchableOpacity, StyleSheet } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { connect } from 'react-redux';
 
-import { saveDeckTitle } from '../utils/helpers';
+import { sendDeckTitle } from '../actions';
 
-export default class NewDeck extends Component {
+class NewDeck extends Component {
   state = {
     deckTitle: ''
   }
 
   onSubmit() {
-    saveDeckTitle(this.state.deckTitle).then(() => this.props.navigation.navigate(
-      'DeckList'
-    ));
+    if(this.state.deckTitle !== '') {
+      this.props.sendDeckTitle(this.state.deckTitle);
+    }
   }
 
   render() {
@@ -78,3 +79,13 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   }
 });
+
+function mapStateToProps(state) {
+  console.log(state);
+
+  return {
+    completed: state.completed
+  }
+}
+
+export default connect(mapStateToProps, { sendDeckTitle })(NewDeck);
