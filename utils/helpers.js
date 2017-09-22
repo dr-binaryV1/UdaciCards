@@ -3,7 +3,7 @@ const CARD_STORAGE_KEY = 'flashCards:key';
 
 export function getDecks() {
   return AsyncStorage.getItem(CARD_STORAGE_KEY, (err, result) => {
-    return result;
+    return JSON.parse(result);
   })
 }
 
