@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet, FlatList } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-//import { getDecks } from '../utils/helpers';
 import { connect } from 'react-redux';
 
 import Deck from './Deck';
@@ -24,10 +23,17 @@ class DeckList extends Component {
 
     return (
       <View style={styles.container}>
-        {decksData ?
+        {Object.keys(decksData).length > 0 
+          ?
           <FlatList
             data={decksData}
-            renderItem={({item}) => <Deck navigation={this.props.navigation} title={item.title} cardNumber={item.questions.length} />}
+            renderItem={({item}) => 
+              <Deck
+                navigation={this.props.navigation}
+                title={item.title}
+                cardNumber={item.questions.length}
+              />
+            }
             keyExtractor={(item, index) => index}
           /> : (
               <View style={styles.subContainer}>
