@@ -1,13 +1,11 @@
 import React, {Component } from 'react';
-import { connect } from 'react-redux';
 import { Text, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { connect } from 'react-redux';
 
 import { getDeck } from '../utils/helpers';
 
-export default class DeckView extends Component {
-  state = {deck: ''}
-
+class DeckView extends Component {
   static navigationOptions = ({ navigation }) => {
     const { title } = navigation.state.params;
 
@@ -16,31 +14,32 @@ export default class DeckView extends Component {
     }
   }
 
-  componentDidMount() {
-    const { title } = this.props.navigation.state.params;
-    getDeck(title).then(deck => this.setState({ deck }));
-  }
-
   render() {
     const { container, headerText, detailText, addCardButton, startQuizButton } = styles;
-    const { title, questions } = this.state.deck;
+    const { deck } = this.props;
 
     return (
       <View style={container}>
         <MaterialCommunityIcons name='cards' size={300} color='#1485ff' />
-        <Text style={headerText}>{title}</Text>
-        <Text style={detailText}>{questions ? `${questions.length} Card(s)` : '0 Card'}</Text>
+        <Text style={headerText}>{deck.title}</Text>
+        <Text style={detailText}>{deck.questions ? `${deck.questions.length} Card(s)` : '0 Card'}</Text>
 
         <TouchableOpacity
           onPress={() => this.props.navigation.navigate(
             'AddCard',
-            {title}
+            {title: deck.title}
           )}
           style={addCardButton}>
           <Text style={{ fontSize: 20 }}>Add Card</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={startQuizButton}>
+        <TouchableOpacity
+          disabled={deck.questions.length > 0 ? false : true}
+          onPress={() => this.props.navigation.navigate(
+            'Quiz',
+            {title: deck.title}
+          )}
+          style={startQuizButton}>
           <Text style={{ fontSize: 20, color: '#FFF' }}>Start Quiz</Text>
         </TouchableOpacity>
       </View>
@@ -83,3 +82,13 @@ const styles = StyleSheet.create({
     marginTop: 20
   }
 });
+
+function mapStateToProps(state, { navigation }) {
+  const { title } = navigation.state.params;
+
+  return {
+    deck: state[title]
+  }
+}
+
+export default connect(mapStateToProps)(DeckView);
