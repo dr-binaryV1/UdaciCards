@@ -6,8 +6,7 @@ import { connect } from 'react-redux';
 import { sendDeckTitle } from '../actions';
 
 class NewDeck extends Component {
-  componentWillUpdate() {
-    console.log(this.state.deckTitle)
+  componentDidUpdate() {
     if(this.props.decks[this.state.deckTitle]) {
       this.props.navigation.navigate(
         'DeckView',
