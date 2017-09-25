@@ -17,6 +17,7 @@ import DeckList from './components/DeckList';
 import NewDeck from './components/NewDeck';
 import DeckView from './components/DeckView';
 import AddCard from './components/AddCard';
+import Quiz from './components/Quiz';
 
 function CardStatusBar ({ backgroundColor, ...props }) {
   return (
@@ -42,36 +43,28 @@ export default class App extends React.Component {
         }
       }
     });
-
+    const navOptions = {
+      headerTintColor: '#FFF',
+      headerStyle: {
+        backgroundColor: '#1485ff'
+      }
+    }
     const MainNavigator = StackNavigator({
       Home: {
         screen: Tabs,
-        navigationOptions: {
-          title: 'FlashCards',
-          headerTintColor: '#FFF',
-          headerStyle: {
-            backgroundColor: '#1485ff'
-          }
-        }
+        navigationOptions: { ...navOptions, title: 'FlashCards' }
       },
       DeckView: {
         screen: DeckView,
-        navigationOptions: {
-          headerTintColor: '#FFF',
-          headerStyle: {
-            backgroundColor: '#1485ff'
-          }
-        }
+        navigationOptions: navOptions
       },
       AddCard: {
         screen: AddCard,
-        navigationOptions: {
-          title: 'Add Card',
-          headerTintColor: '#FFF',
-          headerStyle: {
-            backgroundColor: '#1485ff'
-          }
-        }
+        navigationOptions: { ...navOptions, title: 'Add Card' }
+      },
+      Quiz: {
+        screen: Quiz,
+        navigationOptions: { ...navOptions, title: 'Quiz' }
       }
     })
 
