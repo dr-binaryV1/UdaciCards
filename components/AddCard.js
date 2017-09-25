@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   inputStyle: {
-    width: 500,
+    width: 400,
     height: 80,
     fontSize: 30
   },
