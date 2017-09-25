@@ -18,6 +18,7 @@ class AddCard extends Component {
     return (
       <KeyboardAvoidingView behavior='padding' style={container}>
         <MaterialCommunityIcons name='cards' size={300} color='#1485ff' />
+        
         <TextInput
           style={inputStyle}
           placeholder='Enter Question'
