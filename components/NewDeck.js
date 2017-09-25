@@ -6,13 +6,23 @@ import { connect } from 'react-redux';
 import { sendDeckTitle } from '../actions';
 
 class NewDeck extends Component {
+  componentWillUpdate() {
+    console.log(this.state.deckTitle)
+    if(this.props.decks[this.state.deckTitle]) {
+      this.props.navigation.navigate(
+        'DeckView',
+        {title: this.state.deckTitle}
+      )
+    }
+  }
+
   state = {
     deckTitle: ''
   }
 
   onSubmit() {
     if(this.state.deckTitle !== '') {
-      this.props.sendDeckTitle(this.state.deckTitle);
+      this.props.sendDeckTitle(this.state.deckTitle);      
     }
   }
 
@@ -29,8 +39,9 @@ class NewDeck extends Component {
       <KeyboardAvoidingView
         behavior='padding'
         style={containerStyle}>
-        <MaterialCommunityIcons name='cards' size={100} color='#1485ff' />
+        <MaterialCommunityIcons name='cards' size={150} color='#1485ff' />
         <Text style={headingText}>What is the title of your new deck?</Text>
+
         <TextInput
           style={inputStyle}
           placeholder='Enter Deck Title'
@@ -38,6 +49,7 @@ class NewDeck extends Component {
           value={this.state.deckTitle}
         />
         <TouchableOpacity
+          disabled={this.state.deckTitle === '' ? true : false}
           style={buttonStyle}
           onPress={this.onSubmit.bind(this)}>
           <Text style={buttonText}>Submit</Text>
@@ -60,7 +72,7 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   inputStyle: {
-    width: 500,
+    width: 400,
     height: 80,
     fontSize: 30
   },
@@ -81,10 +93,8 @@ const styles = StyleSheet.create({
 });
 
 function mapStateToProps(state) {
-  console.log(state);
-
   return {
-    completed: state.completed
+    decks: state
   }
 }
 
