@@ -65,7 +65,15 @@ class AddCard extends Component {
         />
         { this.state.questionErr !== ''
           ?
-          <Text style={err}><MaterialCommunityIcons name='close-circle-outline' size={20} color='#F00' />  {this.state.questionErr}</Text>
+          <Text
+            style={err}>
+            <MaterialCommunityIcons
+              name='close-circle-outline'
+              size={20}
+              color='#F00' 
+            />
+            {this.state.questionErr}
+          </Text>
           :
           <Text></Text> }
 
@@ -78,7 +86,14 @@ class AddCard extends Component {
         />
         { this.state.answerErr !== ''
           ?
-          <Text style={err}><MaterialCommunityIcons name='close-circle-outline' size={20} color='#F00' />  {this.state.answerErr}</Text>
+          <Text
+            style={err}>
+            <MaterialCommunityIcons
+              name='close-circle-outline'
+              size={20} color='#F00'
+            />
+            {this.state.answerErr}
+          </Text>
           :
           <Text></Text> }
 
