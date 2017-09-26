@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity, Animated } from 'react-native';
 
 class Quiz extends Component {
   state = { 
     currentQuestion: 1,
     correctScore: 0,
-    currentlyViewing: 'Question'
+    currentlyViewing: 'Question',
+    bounceValue: new Animated.Value(1)
   }
 
   render() {
@@ -27,22 +28,31 @@ class Quiz extends Component {
       score
     } = styles;
 
+    const { bounceValue } = this.state;
+
     if(this.state.currentQuestion <= this.props.deck.questions.length) {
       return (
         <View style={container}>
           <Text style={counterText}>{this.state.currentQuestion}/{this.props.deck.questions.length}</Text>
 
           <View style={mainView}>
-            <Text style={mainFontStyle}>
+            <Animated.Text style={[mainFontStyle, { transform: [{ scale: bounceValue }] }]}>
               { this.state.currentlyViewing === 'Question'
                 ?
                   this.props.deck.questions[this.state.currentQuestion-1].question
                 : 
                   this.props.deck.questions[this.state.currentQuestion-1].answer}
-            </Text>
+            </Animated.Text>
 
             <TouchableOpacity
               onPress={() => {
+                const { bounceValue } = this.state;
+
+                Animated.sequence([
+                  Animated.timing(bounceValue, { duration: 200, toValue: 1.10 }),
+                  Animated.spring(bounceValue, { toValue: 1, friction: 4 })
+                ]).start();
+
                 this.state.currentlyViewing === 'Question'
                   ?
                   this.setState({ currentlyViewing: 'Answer' }) 
