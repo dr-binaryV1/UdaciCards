@@ -1,9 +1,17 @@
 import React, {Component } from 'react';
-import { Text, StyleSheet, TouchableOpacity, View } from 'react-native';
+import {
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  ToastAndroid,
+  Platform
+} from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 
 import { getDeck } from '../utils/helpers';
+import { deleteDeck } from '../actions';
 
 class DeckView extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -14,33 +22,55 @@ class DeckView extends Component {
     }
   }
 
+  delete() {
+    const { deck } = this.props;
+
+    this.props.deleteDeck(deck.title);
+    this.props.navigation.goBack();
+  }
+
+  startQuiz() {
+    const { deck } = this.props;
+
+    if(deck.questions.length > 0) {
+      this.props.navigation.navigate(
+        'Quiz',
+        {title: deck.title}
+      )
+    } else if(deck.questions.length === 0 && Platform.OS !== 'ios') {
+      ToastAndroid.show('No Cards in this Deck', ToastAndroid.SHORT);
+    }
+  }
+
   render() {
     const { container, headerText, detailText, addCardButton, startQuizButton } = styles;
     const { deck } = this.props;
 
     return (
-      <View style={container}>
-        <MaterialCommunityIcons name='cards' size={300} color='#1485ff' />
-        <Text style={headerText}>{deck.title}</Text>
-        <Text style={detailText}>{deck.questions ? `${deck.questions.length} Card(s)` : '0 Card'}</Text>
+      <View style={{flex: 1}}>
+        <View style={container}>
+          <MaterialCommunityIcons name='cards' size={300} color='#1485ff' />
+          <Text style={headerText}>{deck.title}</Text>
+          <Text style={detailText}>{deck.questions ? `${deck.questions.length} Card(s)` : '0 Card'}</Text>
 
-        <TouchableOpacity
-          onPress={() => this.props.navigation.navigate(
-            'AddCard',
-            {title: deck.title}
-          )}
-          style={addCardButton}>
-          <Text style={{ fontSize: 20 }}>Add Card</Text>
-        </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate(
+              'AddCard',
+              {title: deck.title}
+            )}
+            style={addCardButton}>
+            <Text style={{ fontSize: 20 }}>Add Card</Text>
+          </TouchableOpacity>
 
-        <TouchableOpacity
-          disabled={deck.questions.length > 0 ? false : true}
-          onPress={() => this.props.navigation.navigate(
-            'Quiz',
-            {title: deck.title}
-          )}
-          style={startQuizButton}>
-          <Text style={{ fontSize: 20, color: '#FFF' }}>Start Quiz</Text>
+          <TouchableOpacity
+            onPress={this.startQuiz.bind(this)}
+            style={startQuizButton}>
+            <Text style={{ fontSize: 20, color: '#FFF' }}>Start Quiz</Text>
+          </TouchableOpacity>
+        </View>
+
+        <TouchableOpacity onPress={this.delete.bind(this)}>
+          <MaterialCommunityIcons name='delete' color='#F00' size={50} />
         </TouchableOpacity>
       </View>
     )
@@ -68,7 +98,7 @@ const styles = StyleSheet.create({
     padding: 10,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 150
+    marginTop: 50
   },
   startQuizButton: {
     width: 200,
@@ -91,4 +121,4 @@ function mapStateToProps(state, { navigation }) {
   }
 }
 
-export default connect(mapStateToProps)(DeckView);
+export default connect(mapStateToProps, { deleteDeck })(DeckView);
