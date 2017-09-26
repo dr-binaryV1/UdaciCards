@@ -36,6 +36,16 @@ export function addCardToDeck(title, card) {
     })
 }
 
+export function removeEntry (title) {
+  return AsyncStorage.getItem(CARD_STORAGE_KEY)
+    .then((results) => {
+      const data = JSON.parse(results);
+      data[title] = undefined;
+      delete data[title];
+      AsyncStorage.setItem(CARD_STORAGE_KEY, JSON.stringify(data));
+    })
+}
+
 export function clearLocalNotification () {
   return AsyncStorage.removeItem(NOTIFICATION_KEY)
     .then(Notifications.cancelAllScheduledNotificationsAsync());
