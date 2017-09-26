@@ -2,7 +2,8 @@ import {
   getDecks,
   getDeck,
   saveDeckTitle,
-  addCardToDeck
+  addCardToDeck,
+  removeEntry
 } from '../utils/helpers';
 
 export const GET_DECKS = 'GET_DECKS';
@@ -36,6 +37,12 @@ export const sendDeckTitle = (title) => dispatch => {
 
 export const sendCardToDeck = (title, card) => dispatch => {
   addCardToDeck(title, card).then(() => {
+    fetchDecks()(dispatch);
+  })
+}
+
+export const deleteDeck = (title) => dispatch => {
+  removeEntry(title).then(() => {
     fetchDecks()(dispatch);
   })
 }
