@@ -36,7 +36,7 @@ class DeckView extends Component {
           this.props.navigation.goBack();
         }},
       ],
-      { cancelable: false }
+      { cancelable: true }
     )
   }
 
