@@ -1,5 +1,13 @@
 import React, { Component } from 'react';
-import { Text, View, TextInput,KeyboardAvoidingView, TouchableOpacity, StyleSheet } from 'react-native';
+import { 
+  Text,
+  View,
+  TextInput,
+  KeyboardAvoidingView,
+  TouchableOpacity,
+  StyleSheet,
+  ActivityIndicator
+ } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 
@@ -14,19 +22,20 @@ class NewDeck extends Component {
         'DeckView',
         {title}
       )
-      this.setState({ deckTitle: '' });
+      this.setState({ deckTitle: '', loading: false });
     }
   }
 
   state = {
     deckTitle: '',
-    errMessage: ''
+    errMessage: '',
+    loading: false
   }
 
   onSubmit() {
     if(this.state.deckTitle !== '') {
       this.props.sendDeckTitle(this.state.deckTitle);
-      this.setState({ errMessage: '' })      
+      this.setState({ errMessage: '', loading: true })      
     } else {
       this.setState({ errMessage: 'Deck title cannot be empty.' })
     }
@@ -58,15 +67,25 @@ class NewDeck extends Component {
 
         { this.state.errMessage !== ''
           ?
-          <Text style={err}><MaterialCommunityIcons name='close-circle-outline' size={20} color='#F00' />  {this.state.errMessage}</Text>
+          <Text 
+            style={err}>
+            <MaterialCommunityIcons
+              name='close-circle-outline'
+              size={20} color='#F00'
+            />
+            {this.state.errMessage}
+          </Text>
           :
           <Text></Text> }
-
-        <TouchableOpacity
-          style={buttonStyle}
-          onPress={this.onSubmit.bind(this)}>
-          <Text style={buttonText}>Submit</Text>
-        </TouchableOpacity>
+        { this.state.loading
+          ?
+          <ActivityIndicator size='small' />
+          :
+          <TouchableOpacity
+            style={buttonStyle}
+            onPress={this.onSubmit.bind(this)}>
+            <Text style={buttonText}>Submit</Text>
+          </TouchableOpacity>}
       </KeyboardAvoidingView>
     )
   }

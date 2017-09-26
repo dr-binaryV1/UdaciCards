@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
-import { Text, KeyboardAvoidingView, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import {
+  Text,
+  KeyboardAvoidingView,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  ActivityIndicator
+} from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 
@@ -17,7 +24,7 @@ class AddCard extends Component {
         'DeckView',
         {title}
       );
-      this.setState({ question: '', answer: '' });
+      this.setState({ question: '', answer: '', loading: false });
     }  
   }
 
@@ -25,7 +32,8 @@ class AddCard extends Component {
     question: '',
     answer: '',
     questionErr: '',
-    answerErr: ''
+    answerErr: '',
+    loading: false
   }
 
   submitCard() {
@@ -34,7 +42,7 @@ class AddCard extends Component {
 
     if(question !== '' && answer !== '') {
       this.props.sendCardToDeck(title, {question, answer});
-      this.setState({ questionErr: '', answerErr: '' })
+      this.setState({ questionErr: '', answerErr: '', loading: true })
     }
 
     if(question === '') {
@@ -96,12 +104,15 @@ class AddCard extends Component {
           </Text>
           :
           <Text></Text> }
-
-        <TouchableOpacity
-          onPress={this.submitCard.bind(this)}
-          style={addCardButton}>
-          <Text style={{ fontSize: 20, color: '#FFF' }}>Submit Card</Text>
-        </TouchableOpacity>
+        { this.state.loading
+          ?
+          <ActivityIndicator size='small' />
+          :
+          <TouchableOpacity
+            onPress={this.submitCard.bind(this)}
+            style={addCardButton}>
+            <Text style={{ fontSize: 20, color: '#FFF' }}>Submit Card</Text>
+          </TouchableOpacity>}
       </KeyboardAvoidingView>
     )
   }
