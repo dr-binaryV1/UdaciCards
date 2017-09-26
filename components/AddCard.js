@@ -6,14 +6,52 @@ import { connect } from 'react-redux';
 import { sendCardToDeck } from '../actions';
 
 class AddCard extends Component {
+  componentDidUpdate(){
+    const {title} = this.props.navigation.state.params;
+    const ques = this.props.deck.questions.filter((obj) => {
+      return obj.question === this.state.question
+    }).map(question => { return question });
+
+    if(ques.length > 0) {
+      this.props.navigation.navigate(
+        'DeckView',
+        {title}
+      );
+      this.setState({ question: '', answer: '' });
+    }  
+  }
+
   state = {
     question: '',
-    answer: ''
+    answer: '',
+    questionErr: '',
+    answerErr: ''
+  }
+
+  submitCard() {
+    const { question, answer } = this.state;
+    const { title } = this.props.navigation.state.params;
+
+    if(question !== '' && answer !== '') {
+      this.props.sendCardToDeck(title, {question, answer});
+      this.setState({ questionErr: '', answerErr: '' })
+    }
+
+    if(question === '') {
+      this.setState({ questionErr: 'Question field cannot be empty.' })
+    } else {
+      this.setState({ questionErr: '' });
+    }
+
+    if(answer === '') {
+      this.setState({ answerErr: 'Answer field cannot be empty.' })
+    } else {
+      this.setState({ answerErr: '' });
+    }
   }
 
   render() {
-    const { container, inputStyle, addCardButton } = styles;
-    const { title } = this.props.navigation.state.params;
+    const { container, inputStyle, addCardButton, err } = styles;
 
     return (
       <KeyboardAvoidingView behavior='padding' style={container}>
@@ -25,6 +63,11 @@ class AddCard extends Component {
           onChangeText={text => this.setState({ question: text })}
           value={this.state.question}
         />
+        { this.state.questionErr !== ''
+          ?
+          <Text style={err}><MaterialCommunityIcons name='close-circle-outline' size={20} color='#F00' />  {this.state.questionErr}</Text>
+          :
+          <Text></Text> }
 
         <TextInput
           style={inputStyle}
@@ -33,9 +76,14 @@ class AddCard extends Component {
           onChangeText={text => this.setState({ answer: text })}
           value={this.state.answer}
         />
+        { this.state.answerErr !== ''
+          ?
+          <Text style={err}><MaterialCommunityIcons name='close-circle-outline' size={20} color='#F00' />  {this.state.answerErr}</Text>
+          :
+          <Text></Text> }
 
         <TouchableOpacity
-          onPress={() => this.props.sendCardToDeck(title, {question: this.state.question, answer: this.state.answer})}
+          onPress={this.submitCard.bind(this)}
           style={addCardButton}>
           <Text style={{ fontSize: 20, color: '#FFF' }}>Submit Card</Text>
         </TouchableOpacity>
@@ -65,7 +113,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 30
+  },
+  err: {
+    color: '#F00',
+    fontSize: 20
   }
 })
 
-export default connect(null, { sendCardToDeck })(AddCard);
+function mapStateToProps(state, { navigation }) {
+  const { title } = navigation.state.params;
+
+  return {
+    deck: state[title]
+  }
+}
+
+export default connect(mapStateToProps, { sendCardToDeck })(AddCard);
