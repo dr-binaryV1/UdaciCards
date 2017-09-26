@@ -1,5 +1,20 @@
 {
   "expo": {
-    "sdkVersion": "20.0.0"
+    "sdkVersion": "20.0.0",
+    "orientation": "portrait",
+    "name": "UdaciCards",
+    "description": "The best flash card studying app.",
+    "slug": "udacicards",
+    "version": "1.0",
+    "icon": "http://img.informer.com/icons/png/128/1504/1504792.png",
+    "notification": {
+      "icon": "http://img.informer.com/icons/png/128/1504/1504792.png"
+    },
+    "ios": {
+     "bundleIdentifier": "org.udacicards.exp"
+    },
+    "android": {
+     "package": "org.udacicards.exp"
+    }
   }
 }
