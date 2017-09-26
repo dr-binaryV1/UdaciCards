@@ -5,7 +5,8 @@ import {
   TouchableOpacity,
   View,
   ToastAndroid,
-  Platform
+  Platform,
+  Alert
 } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
@@ -25,8 +26,18 @@ class DeckView extends Component {
   delete() {
     const { deck } = this.props;
 
-    this.props.deleteDeck(deck.title);
-    this.props.navigation.goBack();
+    Alert.alert(
+      `Delete ${deck.title}?`,
+      `You are about to delete '${deck.title}' Deck`,
+      [
+        {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+        {text: 'Delete', onPress: () => {
+          this.props.deleteDeck(deck.title);
+          this.props.navigation.goBack();
+        }},
+      ],
+      { cancelable: false }
+    )
   }
 
   startQuiz() {
