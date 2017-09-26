@@ -1,22 +1,41 @@
-import React from 'react';
-import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { Component } from 'react';
+import { Text, View, TouchableOpacity, StyleSheet, Animated } from 'react-native';
 
 import { getDeck } from '../utils/helpers';
 
-export default function Deck(props) {
-  return (
-    <TouchableOpacity
-      onPress={() => /*getDeck(props.title).then(result => console.log(result))*/ 
-        props.navigation.navigate(
-          'DeckView',
-          {title: props.title}
-      )}>
-      <View style={styles.containerStyle}>
-        <Text style={styles.titleStyle}>{props.title}</Text>
-        <Text style={styles.cardNumberDesc}>{`${props.cardNumber} card(s)`}</Text>
-      </View>
-    </TouchableOpacity>
-  )
+export default class Deck extends Component {
+  state = {
+    bounceValue: new Animated.Value(1)
+  }
+
+  onPress() {
+    const { bounceValue } = this.state;
+
+    Animated.sequence([
+      Animated.timing(bounceValue, { duration: 200, toValue: 1.10 }),
+      Animated.spring(bounceValue, { toValue: 1, friction: 4 })
+    ]).start();
+
+    setTimeout(() => {
+      this.props.navigation.navigate(
+        'DeckView',
+        {title: this.props.title}
+      )
+    }, 500);
+  }
+
+  render() {
+    const { bounceValue } = this.state;
+    return (
+      <TouchableOpacity
+        onPress={this.onPress.bind(this)}>
+        <Animated.View style={[styles.containerStyle, { transform: [{ scale: bounceValue}] }]}>
+          <Text style={styles.titleStyle}>{this.props.title}</Text>
+          <Text style={styles.cardNumberDesc}>{`${this.props.cardNumber} card(s)`}</Text>
+        </Animated.View>
+      </TouchableOpacity>
+    )
+  }
 };
 
 const styles = StyleSheet.create({
