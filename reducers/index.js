@@ -6,7 +6,7 @@ import {
 function decks(state = {}, action) {
   switch(action.type) {
     case GET_DECKS:
-      return { ...state, ...action.decks }
+      return { ...action.decks }
 
     case SAVE_DECK_TITLE:
       return { ...state, ...action.decks }
