@@ -23,7 +23,7 @@ class Quiz extends Component {
       toggleButtonText,
       correctButton,
       incorrectButton,
-      backToListButton,
+      backToViewButton,
       scoreHeading,
       score
     } = styles;
@@ -122,13 +122,9 @@ class Quiz extends Component {
             </TouchableOpacity>
 
             <TouchableOpacity
-              onPress={() => {
-                this.props.navigation.navigate(
-                  'DeckList'
-                )
-              }}
-              style={backToListButton}>
-              <Text style={{ fontSize: 20, color: '#00B300' }}>Go to Deck List</Text>
+              onPress={() => this.props.navigation.goBack()}
+              style={backToViewButton}>
+              <Text style={{ fontSize: 20, color: '#00B300' }}>View Deck</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -180,7 +176,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
-  backToListButton: {
+  backToViewButton: {
     padding: 20,
     borderRadius: 5,
     borderColor: '#00B300',
